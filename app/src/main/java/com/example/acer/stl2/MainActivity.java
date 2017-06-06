@@ -2,11 +2,17 @@ package com.example.acer.stl2;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.example.acer.stl2.Database.DatabaseHelper;
+import com.example.acer.stl2.Database.Model.Activator;
+
 
 public class MainActivity extends ActionBarActivity {
+
+    DatabaseHelper db = new DatabaseHelper(this);
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +36,9 @@ public class MainActivity extends ActionBarActivity {
 
     //noinspection SimplifiableIfStatement
     if (id == R.id.action_settings) {
+        Boolean active = db.checkActive();
+        Log.d("CHECK ACTIVE", String.valueOf(active));
+
       return true;
     }
 
