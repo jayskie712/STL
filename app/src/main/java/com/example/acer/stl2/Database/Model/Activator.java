@@ -1,7 +1,7 @@
 package com.example.acer.stl2.Database.Model;
 
 /**
- * Created by reyanthonyaleonar on 6/7/17.
+ * Created by Acer on 6/7/17.
  */
 
 public class Activator {

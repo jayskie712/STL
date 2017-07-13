@@ -1,24 +1,42 @@
 package com.example.acer.stl2;
 
-import android.support.v7.app.ActionBarActivity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageButton;
 
 import com.example.acer.stl2.Database.DatabaseHelper;
-import com.example.acer.stl2.Database.Model.Activator;
 
 
 public class MainActivity extends ActionBarActivity {
 
-    DatabaseHelper db = new DatabaseHelper(this);
+  DatabaseHelper db = new DatabaseHelper(this);
+  private ImageButton _nc3;
+  private ImageButton _nc2;
+  private ImageButton _lc3;
+  private ImageButton _lc2;
+  private String      _msg;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+
+  /*  this.supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
+    this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+*/
     setContentView(R.layout.activity_main);
+    initViews();
+
+    if(db.checkActive()){
+      initListeners();
+    }
+
+
   }
+
 
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
@@ -36,12 +54,68 @@ public class MainActivity extends ActionBarActivity {
 
     //noinspection SimplifiableIfStatement
     if (id == R.id.action_settings) {
-        Boolean active = db.checkActive();
-        Log.d("CHECK ACTIVE", String.valueOf(active));
+
 
       return true;
     }
 
     return super.onOptionsItemSelected(item);
   }
+
+  public void initViews(){
+    _nc3 = (ImageButton)findViewById(R.id.nc3);
+    _nc2 = (ImageButton)findViewById(R.id.nc2);
+    _lc3 = (ImageButton)findViewById(R.id.lc3);
+    _lc2 = (ImageButton)findViewById(R.id.lc2);
+  }
+
+
+  public void initListeners(){
+
+
+    _nc3.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        Intent intent = new Intent(MainActivity.this, NcthreeActivity.class);
+        intent.putExtra("MAX_INPUT_COMBI_LENGTH", 3);
+        intent.putExtra("DEFAULT_PHONE_NUMBER", "+639309556910");
+        startActivity(intent);
+
+      }
+    });
+
+    _nc2.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        Intent intent = new Intent(MainActivity.this, NcthreeActivity.class);
+        intent.putExtra("MAX_INPUT_COMBI_LENGTH", 2);
+        intent.putExtra("DEFAULT_PHONE_NUMBER", "+639309556910");
+        startActivity(intent);
+      }
+    });
+
+
+    _lc3.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+         Intent intent = new Intent(MainActivity.this, NcthreeActivity.class);
+        intent.putExtra("MAX_INPUT_COMBI_LENGTH", 3);
+        intent.putExtra("DEFAULT_PHONE_NUMBER", "+639309556910");
+        startActivity(intent);
+      }
+    });
+
+
+    _lc2.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        Intent intent = new Intent(MainActivity.this, NcthreeActivity.class);
+        intent.putExtra("MAX_INPUT_COMBI_LENGTH", 3);
+        intent.putExtra("DEFAULT_PHONE_NUMBER", "+639309556910");
+        startActivity(intent);
+      }
+    });
+
+  }
+
 }

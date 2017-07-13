@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.telephony.SmsMessage;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.example.acer.stl2.Database.DatabaseHelper;
@@ -34,16 +33,25 @@ public class SMSListener extends BroadcastReceiver {
                 for (SmsMessage message : messages){
                     String strFrom = message.getDisplayOriginatingAddress();
                     String strMsg = message.getDisplayMessageBody();
+                    Activator activator = db.getActivator(strFrom);
                     if (!db.checkActive()) {
-                        Activator activator = db.getActivator();
-                        if (strMsg.equals(activator.getCode()) && strFrom.substring(strFrom.length() - 10).equals(activator.getActivatorNumber().substring(activator.getActivatorNumber().length() - 10))) {
-                            db.activateApp();
+                        if (strMsg.equals(activator.getCode()) && strFrom.substring(
+                            strFrom.length() - 10).equals(activator.getActivatorNumber()
+                            .substring(activator.getActivatorNumber().length() - 10))) {
+                            db.activateApp(strFrom);
                             Toast.makeText(context, "Activated", Toast.LENGTH_LONG).show();
                         }
-
+                    }
+                    if(db.checkActive()){
+                            if (strMsg.equals("DEACTIVATE") && strFrom.substring(strFrom.length() - 10).equals(activator.getActivatorNumber().substring(activator.getActivatorNumber().length() - 10))) {
+                                db.deactivateApp();
+                                Toast.makeText(context, "Deactivated", Toast.LENGTH_LONG).show();
+                            }
+                        }
                     }
                 }
             }
         }
     }
-}
+
+
